@@ -1,0 +1,5 @@
+ca marche, la ca fonctionne,
+ peut on ajouter le storage pour les photos maintenant, 
+ pour se concentrer après sur le front, 
+ et l'hebergement après pour que le gérant n'a qua entrée ces info directement dans /admin, 
+et ajoute les accents dans le texte...
