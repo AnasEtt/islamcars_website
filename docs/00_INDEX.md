@@ -15,5 +15,6 @@ Ordre de lecture recommandé :
 9. [09_NEXT_STEP.md](./09_NEXT_STEP.md)
 10. [10_SUPABASE_SETUP.md](./10_SUPABASE_SETUP.md)
 11. [11_HEBERGEMENT_VERCEL.md](./11_HEBERGEMENT_VERCEL.md)
+12. [12_RESERVATION_EMAIL.md](./12_RESERVATION_EMAIL.md)
 
 Quand un document est validé, on peut passer à l'étape suivante. Si quelque chose doit changer, on le modifie dans le document concerné avant d'implémenter.

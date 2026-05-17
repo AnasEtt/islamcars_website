@@ -6,10 +6,15 @@ import { SiteLogo } from "@/components/site-logo";
 import { formatPriceMAD } from "@/lib/format";
 import { getPublicCarBySlug } from "@/lib/public-cars";
 import { getSiteSettings } from "@/lib/site-settings";
+import { createReservationAction } from "./actions";
 
 type CarDetailPageProps = {
   params: Promise<{
     slug: string;
+  }>;
+  searchParams?: Promise<{
+    notification?: string;
+    reservation?: string;
   }>;
 };
 
@@ -31,8 +36,18 @@ export async function generateMetadata({ params }: CarDetailPageProps) {
   };
 }
 
-export default async function CarDetailPage({ params }: CarDetailPageProps) {
+const reservationMessages: Record<string, string> = {
+  dates: "La date de fin doit être après la date de début.",
+  error: "Impossible d'envoyer la demande. Réessaie dans quelques instants.",
+  validation: "Vérifie les informations du formulaire.",
+};
+
+export default async function CarDetailPage({
+  params,
+  searchParams,
+}: CarDetailPageProps) {
   const { slug } = await params;
+  const query = searchParams ? await searchParams : {};
   const [car, settings] = await Promise.all([
     getPublicCarBySlug(slug),
     getSiteSettings(),
@@ -145,19 +160,100 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
           </div>
 
           <div className="mt-6 rounded-md border border-[#d6b98c] bg-[#fffbeb] p-4 text-sm leading-6 text-[#7c2d12]">
-            Paiement uniquement en espèces. La réservation sera confirmée
-            manuellement par téléphone, email ou WhatsApp.
+            Paiement uniquement en espèces. La réservation sera confirmée par téléphone, email ou WhatsApp.
           </div>
 
-          <button
-            className="mt-6 h-12 w-full rounded-md bg-[#3a444b] font-bold text-white transition hover:bg-[#4b5660]"
-            type="button"
-          >
-            Demander une réservation
-          </button>
+          {query.reservation === "success" ? (
+            <div className="mt-6 rounded-md border border-green-200 bg-green-50 p-4 text-sm font-medium text-green-700">
+              Demande envoyée. Le gérant va vous recontacter pour confirmer la
+              réservation.
+              {query.notification === "failed" ? (
+                <span className="mt-2 block">
+                  La demande est bien enregistrée, mais l&apos;email automatique
+                  n&apos;a pas pu partir.
+                </span>
+              ) : null}
+            </div>
+          ) : null}
+
+          {query.reservation && query.reservation !== "success" ? (
+            <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
+              {reservationMessages[query.reservation] ??
+                "Impossible d'envoyer la demande."}
+            </div>
+          ) : null}
+
+          <form action={createReservationAction} className="mt-6 space-y-4">
+            <input name="car_id" type="hidden" value={car.id} />
+            <input name="car_slug" type="hidden" value={car.slug} />
+            <input
+              name="car_label"
+              type="hidden"
+              value={`${car.brand} ${car.model}`}
+            />
+
+            <Field label="Nom complet" name="customer_name" required />
+            <Field label="Email" name="customer_email" required type="email" />
+            <Field label="Téléphone" name="customer_phone" required />
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field
+                label="Date de début"
+                name="start_date"
+                required
+                type="date"
+              />
+              <Field
+                label="Date de fin"
+                name="end_date"
+                required
+                type="date"
+              />
+            </div>
+
+            <label className="block text-sm font-semibold">
+              Message
+              <textarea
+                className="mt-2 min-h-24 w-full rounded-md border border-black/15 px-3 py-3 outline-none transition focus:border-[#b45309] focus:ring-2 focus:ring-[#facc15]/30"
+                name="message"
+                placeholder="Lieu de livraison, heure souhaitée, question..."
+              />
+            </label>
+
+            <button
+              className="h-12 w-full rounded-md bg-[#3a444b] font-bold text-white transition hover:bg-[#4b5660]"
+              type="submit"
+            >
+              Demander une réservation
+            </button>
+          </form>
         </aside>
       </section>
     </main>
+  );
+}
+
+function Field({
+  label,
+  name,
+  required,
+  type = "text",
+}: {
+  label: string;
+  name: string;
+  required?: boolean;
+  type?: string;
+}) {
+  return (
+    <label className="block text-sm font-semibold">
+      {label}
+      <input
+        className="mt-2 h-11 w-full rounded-md border border-black/15 px-3 outline-none transition focus:border-[#b45309] focus:ring-2 focus:ring-[#facc15]/30"
+        name={name}
+        required={required}
+        type={type}
+      />
+    </label>
   );
 }
 
