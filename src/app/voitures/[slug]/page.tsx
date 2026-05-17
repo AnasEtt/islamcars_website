@@ -7,6 +7,7 @@ import { formatPriceMAD } from "@/lib/format";
 import { getPublicCarBySlug } from "@/lib/public-cars";
 import { getSiteSettings } from "@/lib/site-settings";
 import { createReservationAction } from "./actions";
+import { ReservationForm } from "./reservation-form";
 
 type CarDetailPageProps = {
   params: Promise<{
@@ -37,7 +38,8 @@ export async function generateMetadata({ params }: CarDetailPageProps) {
 }
 
 const reservationMessages: Record<string, string> = {
-  dates: "La date de fin doit être après la date de début.",
+  dates: "tu dois choisir une date après ta date de début",
+  past: "tu ne peux pas reservé dans le passé",
   error: "Impossible d'envoyer la demande. Réessaie dans quelques instants.",
   validation: "Vérifie les informations du formulaire.",
 };
@@ -183,77 +185,14 @@ export default async function CarDetailPage({
             </div>
           ) : null}
 
-          <form action={createReservationAction} className="mt-6 space-y-4">
-            <input name="car_id" type="hidden" value={car.id} />
-            <input name="car_slug" type="hidden" value={car.slug} />
-            <input
-              name="car_label"
-              type="hidden"
-              value={`${car.brand} ${car.model}`}
-            />
-
-            <Field label="Nom complet" name="customer_name" required />
-            <Field label="Email" name="customer_email" required type="email" />
-            <Field label="Téléphone" name="customer_phone" required />
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field
-                label="Date de début"
-                name="start_date"
-                required
-                type="date"
-              />
-              <Field
-                label="Date de fin"
-                name="end_date"
-                required
-                type="date"
-              />
-            </div>
-
-            <label className="block text-sm font-semibold">
-              Message
-              <textarea
-                className="mt-2 min-h-24 w-full rounded-md border border-black/15 px-3 py-3 outline-none transition focus:border-[#b45309] focus:ring-2 focus:ring-[#facc15]/30"
-                name="message"
-                placeholder="Lieu de livraison, heure souhaitée, question..."
-              />
-            </label>
-
-            <button
-              className="h-12 w-full rounded-md bg-[#3a444b] font-bold text-white transition hover:bg-[#4b5660]"
-              type="submit"
-            >
-              Demander une réservation
-            </button>
-          </form>
+          <ReservationForm
+            carId={car.id}
+            carLabel={`${car.brand} ${car.model}`}
+            carSlug={car.slug}
+          />
         </aside>
       </section>
     </main>
-  );
-}
-
-function Field({
-  label,
-  name,
-  required,
-  type = "text",
-}: {
-  label: string;
-  name: string;
-  required?: boolean;
-  type?: string;
-}) {
-  return (
-    <label className="block text-sm font-semibold">
-      {label}
-      <input
-        className="mt-2 h-11 w-full rounded-md border border-black/15 px-3 outline-none transition focus:border-[#b45309] focus:ring-2 focus:ring-[#facc15]/30"
-        name={name}
-        required={required}
-        type={type}
-      />
-    </label>
   );
 }
 

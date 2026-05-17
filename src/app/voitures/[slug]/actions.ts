@@ -36,6 +36,11 @@ export async function createReservationAction(formData: FormData) {
   }
 
   const reservation = parsed.data;
+  const today = new Date().toISOString().split("T")[0];
+
+  if (reservation.start_date < today) {
+    redirect("?reservation=past");
+  }
 
   if (reservation.end_date < reservation.start_date) {
     redirect("?reservation=dates");
