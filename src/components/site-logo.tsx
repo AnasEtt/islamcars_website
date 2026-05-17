@@ -8,7 +8,7 @@ type SiteLogoProps = {
 export function SiteLogo({ city, context }: SiteLogoProps) {
   return (
     <span className="inline-flex items-center gap-3">
-      <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-white">
+      <span className="relative h-12 w-12 shrink-0">
         <Image
           alt="Islamcars"
           className="object-contain"

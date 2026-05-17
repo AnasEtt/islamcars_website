@@ -2,6 +2,7 @@
 shape-rendering="geometricPrecision"
 width="4000" height="4000" viewBox="0 0 1024 1024">
   <metadata>null</metadata>
+<rect width="1024" height="1024" rx="160" fill="white" />
 
 <path d="
 M 180.913 483.915
