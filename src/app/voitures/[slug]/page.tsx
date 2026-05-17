@@ -2,6 +2,7 @@ import { ArrowLeft, CalendarCheck, Fuel, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SiteLogo } from "@/components/site-logo";
 import { formatPriceMAD } from "@/lib/format";
 import { getPublicCarBySlug } from "@/lib/public-cars";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -45,14 +46,11 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
   const gallery = car.car_images.slice(1);
 
   return (
-    <main className="min-h-screen bg-[#f7f3ed] text-[#111827]">
+    <main className="min-h-screen bg-[#f7f3ed] text-[#3a444b]">
       <header className="border-b border-black/10 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-10">
           <Link href="/">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#b45309]">
-              {settings.city}
-            </p>
-            <p className="text-2xl font-bold">{settings.agency_name}</p>
+            <SiteLogo city={settings.city} />
           </Link>
           <Link
             className="inline-flex items-center gap-2 rounded-md border border-black/10 px-4 py-2 text-sm font-bold transition hover:bg-[#f9fafb]"
@@ -66,7 +64,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
 
       <section className="mx-auto grid max-w-7xl gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-10">
         <div>
-          <div className="relative min-h-[360px] overflow-hidden rounded-lg bg-[#111827] shadow-xl sm:min-h-[520px]">
+          <div className="relative min-h-[360px] overflow-hidden rounded-lg bg-[#3a444b] shadow-xl sm:min-h-[520px]">
             {mainImage ? (
               <Image
                 alt={mainImage.alt_text ?? `${car.brand} ${car.model}`}
@@ -152,7 +150,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
           </div>
 
           <button
-            className="mt-6 h-12 w-full rounded-md bg-[#111827] font-bold text-white transition hover:bg-[#374151]"
+            className="mt-6 h-12 w-full rounded-md bg-[#3a444b] font-bold text-white transition hover:bg-[#4b5660]"
             type="button"
           >
             Demander une réservation

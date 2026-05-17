@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/admin";
 import { CarForm } from "../car-form";
+import { DeleteCarButton } from "../delete-car-button";
 import { deleteCarImageAction, updateCarAction } from "../actions";
 
 type EditCarPageProps = {
@@ -154,6 +155,24 @@ export default async function EditCarPage({
       </section>
 
       <CarForm action={updateCarAction} car={car} submitLabel="Enregistrer" />
+
+      <section className="mt-8 rounded-lg border border-red-200 bg-red-50 p-6">
+        <h2 className="text-lg font-black text-red-800">
+          Supprimer la voiture
+        </h2>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-red-700">
+          Cette action retire la voiture du site public et supprime ses photos.
+          Elle est bloquée si des réservations sont encore liées à cette voiture.
+        </p>
+        <div className="mt-4">
+          <DeleteCarButton
+            carId={car.id}
+            carLabel={`${car.brand} ${car.model}`}
+            fullWidth
+            slug={car.slug}
+          />
+        </div>
+      </section>
     </div>
   );
 }

@@ -34,6 +34,12 @@ function safeFileName(fileName: string) {
   return `${slugify(baseName) || "photo"}.${extension}`;
 }
 
+function getStoragePathFromPublicUrl(imageUrl: string) {
+  const marker = "/storage/v1/object/public/car-images/";
+
+  return imageUrl.includes(marker) ? imageUrl.split(marker)[1] : null;
+}
+
 function parseCarForm(formData: FormData, errorPath: string) {
   const parsed = carSchema.safeParse({
     brand: formData.get("brand"),
@@ -209,8 +215,7 @@ export async function deleteCarImageAction(formData: FormData) {
     redirect(`/admin/voitures/${carId}?error=image`);
   }
 
-  const marker = "/storage/v1/object/public/car-images/";
-  const path = imageUrl.includes(marker) ? imageUrl.split(marker)[1] : null;
+  const path = getStoragePathFromPublicUrl(imageUrl);
 
   if (path) {
     await supabase.storage.from("car-images").remove([path]);
@@ -225,4 +230,52 @@ export async function deleteCarImageAction(formData: FormData) {
   revalidatePath("/admin/voitures");
   revalidatePath(`/admin/voitures/${carId}`);
   redirect(`/admin/voitures/${carId}?updated=1`);
+}
+
+export async function deleteCarAction(formData: FormData) {
+  const { supabase } = await requireAdmin();
+  const carId = String(formData.get("id") ?? "");
+  const slug = String(formData.get("slug") ?? "");
+
+  if (!carId) {
+    redirect("/admin/voitures?error=missing");
+  }
+
+  const { count: reservationCount } = await supabase
+    .from("reservations")
+    .select("id", { count: "exact", head: true })
+    .eq("car_id", carId);
+
+  if ((reservationCount ?? 0) > 0) {
+    redirect("/admin/voitures?error=reservations");
+  }
+
+  const { data: images } = await supabase
+    .from("car_images")
+    .select("image_url")
+    .eq("car_id", carId);
+
+  const paths =
+    images
+      ?.map((image) => getStoragePathFromPublicUrl(image.image_url))
+      .filter((path): path is string => Boolean(path)) ?? [];
+
+  if (paths.length) {
+    await supabase.storage.from("car-images").remove(paths);
+  }
+
+  const { error } = await supabase.from("cars").delete().eq("id", carId);
+
+  if (error) {
+    redirect("/admin/voitures?error=delete");
+  }
+
+  revalidatePath("/");
+  revalidatePath("/voitures");
+  if (slug) {
+    revalidatePath(`/voitures/${slug}`);
+  }
+  revalidatePath("/admin");
+  revalidatePath("/admin/voitures");
+  redirect("/admin/voitures?deleted=1");
 }

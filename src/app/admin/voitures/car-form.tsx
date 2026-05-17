@@ -114,14 +114,13 @@ export function CarForm({
         Ajouter des photos
         <input
           accept="image/*"
-          className="mt-2 w-full rounded-md border border-dashed border-black/20 bg-[#f9fafb] px-3 py-4 text-sm file:mr-4 file:rounded-md file:border-0 file:bg-[#111827] file:px-4 file:py-2 file:text-sm file:font-bold file:text-white"
+          className="mt-2 w-full rounded-md border border-dashed border-black/20 bg-[#f9fafb] px-3 py-4 text-sm file:mr-4 file:rounded-md file:border-0 file:bg-[#3a444b] file:px-4 file:py-2 file:text-sm file:font-bold file:text-white"
           multiple
           name="images"
           type="file"
         />
         <span className="mt-2 block text-xs font-normal text-[#6b7280]">
-          Tu peux ajouter plusieurs photos. Elles seront stockées dans le bucket
-          `car-images`.
+          Tu peux ajouter plusieurs photos pour la galerie de cette voiture.
         </span>
       </label>
 
@@ -137,7 +136,7 @@ export function CarForm({
 
       <div className="mt-8 flex gap-3">
         <button
-          className="h-11 rounded-md bg-[#111827] px-5 text-sm font-bold text-white transition hover:bg-[#374151]"
+          className="h-11 rounded-md bg-[#3a444b] px-5 text-sm font-bold text-white transition hover:bg-[#4b5660]"
           type="submit"
         >
           {submitLabel}

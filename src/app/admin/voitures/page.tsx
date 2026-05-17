@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin";
 import { formatPriceMAD } from "@/lib/format";
+import { DeleteCarButton } from "./delete-car-button";
 
 type CarRow = {
   id: string;
@@ -21,6 +22,13 @@ type CarRow = {
   }[];
 };
 
+type AdminCarsPageProps = {
+  searchParams: Promise<{
+    deleted?: string;
+    error?: string;
+  }>;
+};
+
 const statusLabels: Record<CarRow["status"], string> = {
   available: "Disponible",
   reserved: "Réservée",
@@ -28,7 +36,17 @@ const statusLabels: Record<CarRow["status"], string> = {
   maintenance: "Maintenance",
 };
 
-export default async function AdminCarsPage() {
+const errorMessages: Record<string, string> = {
+  delete: "Impossible de supprimer cette voiture.",
+  missing: "Voiture introuvable.",
+  reservations:
+    "Cette voiture a des reservations liees. Termine ou supprime d'abord ces reservations avant de supprimer la voiture.",
+};
+
+export default async function AdminCarsPage({
+  searchParams,
+}: AdminCarsPageProps) {
+  const params = await searchParams;
   const { supabase } = await requireAdmin();
   const { data: cars, error } = await supabase
     .from("cars")
@@ -48,7 +66,7 @@ export default async function AdminCarsPage() {
           <h1 className="mt-2 text-3xl font-black">Voitures</h1>
         </div>
         <Link
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#111827] px-4 text-sm font-bold text-white transition hover:bg-[#374151]"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#3a444b] px-4 text-sm font-bold text-white transition hover:bg-[#4b5660]"
           href="/admin/voitures/nouveau"
         >
           <Plus size={17} />
@@ -59,6 +77,18 @@ export default async function AdminCarsPage() {
       {error ? (
         <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
           Impossible de charger les voitures.
+        </div>
+      ) : null}
+
+      {params.deleted ? (
+        <div className="mt-6 rounded-md border border-green-200 bg-green-50 p-4 text-sm font-medium text-green-700">
+          Voiture supprimée.
+        </div>
+      ) : null}
+
+      {params.error ? (
+        <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
+          {errorMessages[params.error] ?? "Une erreur est survenue."}
         </div>
       ) : null}
 
@@ -114,12 +144,19 @@ export default async function AdminCarsPage() {
                     {car.featured ? "Oui" : "Non"}
                   </td>
                   <td className="px-4 py-4">
-                    <Link
-                      className="inline-flex h-9 items-center rounded-md border border-black/10 px-3 text-sm font-bold transition hover:bg-[#f9fafb]"
-                      href={`/admin/voitures/${car.id}`}
-                    >
-                      Modifier
-                    </Link>
+                    <div className="flex flex-wrap gap-2">
+                      <Link
+                        className="inline-flex h-9 items-center rounded-md border border-black/10 px-3 text-sm font-bold transition hover:bg-[#f9fafb]"
+                        href={`/admin/voitures/${car.id}`}
+                      >
+                        Modifier
+                      </Link>
+                      <DeleteCarButton
+                        carId={car.id}
+                        carLabel={`${car.brand} ${car.model}`}
+                        slug={car.slug}
+                      />
+                    </div>
                   </td>
                 </tr>
               ))}

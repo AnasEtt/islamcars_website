@@ -18,8 +18,8 @@ export default async function NewCarPage({ searchParams }: NewCarPageProps) {
         </p>
         <h1 className="mt-2 text-3xl font-black">Ajouter une voiture</h1>
         <p className="mt-3 text-[#4b5563]">
-          Ajoute la fiche voiture et ses photos. Les images seront stockées dans
-          Supabase Storage.
+          Ajoute la fiche voiture, le prix, les options et les photos visibles
+          sur le site public.
         </p>
       </div>
 

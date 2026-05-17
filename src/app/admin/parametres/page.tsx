@@ -98,7 +98,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
         </label>
 
         <button
-          className="mt-8 h-11 rounded-md bg-[#111827] px-5 text-sm font-bold text-white transition hover:bg-[#374151]"
+          className="mt-8 h-11 rounded-md bg-[#3a444b] px-5 text-sm font-bold text-white transition hover:bg-[#4b5660]"
           type="submit"
         >
           Enregistrer

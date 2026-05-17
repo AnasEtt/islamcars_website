@@ -1,5 +1,6 @@
-import { CarFront, LockKeyhole } from "lucide-react";
+import { LockKeyhole } from "lucide-react";
 import Link from "next/link";
+import { SiteLogo } from "@/components/site-logo";
 import { signInAction } from "./actions";
 
 type ConnexionPageProps = {
@@ -22,16 +23,10 @@ export default async function ConnexionPage({
   const errorMessage = params.error ? errorMessages[params.error] : null;
 
   return (
-    <main className="grid min-h-screen bg-[#f7f3ed] px-5 py-10 text-[#111827] lg:grid-cols-[0.95fr_1.05fr]">
+    <main className="grid min-h-screen bg-[#f7f3ed] px-5 py-10 text-[#3a444b] lg:grid-cols-[0.95fr_1.05fr]">
       <section className="mx-auto flex w-full max-w-xl flex-col justify-center">
         <Link className="mb-12 inline-flex items-center gap-3" href="/">
-          <span className="grid h-11 w-11 place-items-center rounded-md bg-[#111827] text-white">
-            <CarFront size={22} />
-          </span>
-          <span>
-            <span className="block text-xl font-black">Islamcars</span>
-            <span className="block text-sm text-[#6b7280]">Agadir</span>
-          </span>
+          <SiteLogo city="Agadir" />
         </Link>
 
         <div>
@@ -40,8 +35,8 @@ export default async function ConnexionPage({
           </p>
           <h1 className="mt-3 text-4xl font-black">Connexion admin</h1>
           <p className="mt-4 max-w-md leading-7 text-[#4b5563]">
-            Connecte-toi avec le compte créé dans Supabase. L&apos;accès admin est
-            autorisé uniquement si le profil a le rôle `admin`.
+            Connecte-toi avec le compte gérant. L&apos;accès est réservé aux
+            profils autorisés.
           </p>
         </div>
       </section>
@@ -94,7 +89,7 @@ export default async function ConnexionPage({
           />
 
           <button
-            className="mt-6 h-12 w-full rounded-md bg-[#111827] font-bold text-white transition hover:bg-[#374151]"
+            className="mt-6 h-12 w-full rounded-md bg-[#3a444b] font-bold text-white transition hover:bg-[#4b5660]"
             type="submit"
           >
             Entrer dans l&apos;admin

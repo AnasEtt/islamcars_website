@@ -34,7 +34,7 @@ export function CarCard({ car }: { car: PublicCar }) {
       <div className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="text-xl font-bold text-[#111827]">
+            <h3 className="text-xl font-bold text-[#3a444b]">
               {car.brand} {car.model}
             </h3>
             <p className="text-sm text-[#6b7280]">
@@ -47,13 +47,13 @@ export function CarCard({ car }: { car: PublicCar }) {
         </div>
         <div className="mt-5 flex items-center justify-between border-t border-black/10 pt-4">
           <div>
-            <p className="text-2xl font-black text-[#111827]">
+            <p className="text-2xl font-black text-[#3a444b]">
               {formatPriceMAD(car.daily_price)}
             </p>
             <p className="text-sm text-[#6b7280]">par jour</p>
           </div>
           <Link
-            className="inline-flex h-10 items-center gap-2 rounded-md bg-[#111827] px-3 text-sm font-bold text-white transition hover:bg-[#374151]"
+            className="inline-flex h-10 items-center gap-2 rounded-md bg-[#3a444b] px-3 text-sm font-bold text-white transition hover:bg-[#4b5660]"
             href={`/voitures/${car.slug}`}
           >
             Détails

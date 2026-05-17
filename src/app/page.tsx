@@ -2,6 +2,7 @@ import { ArrowRight, CalendarCheck, CarFront, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CarCard } from "@/components/car-card";
+import { SiteLogo } from "@/components/site-logo";
 import { formatPriceMAD } from "@/lib/format";
 import { getFeaturedCars } from "@/lib/public-cars";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -15,17 +16,14 @@ export default async function Home() {
   const heroImage = heroCar?.car_images[0] ?? null;
 
   return (
-    <main className="min-h-screen bg-[#f7f3ed] text-[#1f2933]">
+    <main className="min-h-screen bg-[#f7f3ed] text-[#3a444b]">
       <section className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-5 py-6 sm:px-8 lg:px-10">
         <header className="flex items-center justify-between border-b border-black/10 pb-5">
           <Link href="/">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#b45309]">
-              {settings.city}
-            </p>
-            <h1 className="text-2xl font-bold">{settings.agency_name}</h1>
+            <SiteLogo city={settings.city} />
           </Link>
           <Link
-            className="inline-flex h-11 items-center gap-2 rounded-md bg-[#111827] px-4 text-sm font-semibold text-white transition hover:bg-[#374151]"
+            className="inline-flex h-11 items-center gap-2 rounded-md bg-[#3a444b] px-4 text-sm font-semibold text-white transition hover:bg-[#4b5660]"
             href="/voitures"
           >
             Voir les voitures
@@ -37,9 +35,9 @@ export default async function Home() {
           <div className="max-w-2xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-[#d6b98c] bg-white/70 px-3 py-2 text-sm font-medium text-[#7c2d12]">
               <CalendarCheck size={16} />
-              Réservation simple, confirmation manuelle
+              Réservation simple, confirmation rapide
             </div>
-            <h2 className="text-5xl font-black leading-[1.02] text-[#111827] sm:text-6xl lg:text-7xl">
+            <h2 className="text-5xl font-black leading-[1.02] text-[#3a444b] sm:text-6xl lg:text-7xl">
               Location de voitures à {settings.city}.
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-[#4b5563]">
@@ -55,7 +53,7 @@ export default async function Home() {
                 <CarFront size={18} />
               </Link>
               <a
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-black/15 bg-white px-5 font-semibold text-[#111827] transition hover:bg-[#f9fafb]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-black/15 bg-white px-5 font-semibold text-[#3a444b] transition hover:bg-[#f9fafb]"
                 href="#contact"
               >
                 Nous contacter
@@ -64,7 +62,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="relative min-h-[430px] overflow-hidden rounded-lg bg-[#111827] shadow-2xl">
+          <div className="relative min-h-[430px] overflow-hidden rounded-lg bg-[#3a444b] shadow-2xl">
             {heroImage ? (
               <Image
                 alt={heroImage.alt_text ?? "Voiture disponible chez Islamcars"}
@@ -75,8 +73,8 @@ export default async function Home() {
                 src={heroImage.image_url}
               />
             ) : (
-              <div className="absolute inset-0 grid place-items-center bg-[#1f2937] text-white/70">
-                Ajoutez vos voitures depuis l&apos;admin
+              <div className="absolute inset-0 grid place-items-center bg-[#2f3940] text-white/70">
+                Les voitures arrivent bientôt
               </div>
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -100,13 +98,13 @@ export default async function Home() {
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#b45309]">
                 Flotte
               </p>
-              <h2 className="mt-2 text-3xl font-black text-[#111827]">
+              <h2 className="mt-2 text-3xl font-black text-[#3a444b]">
                 Voitures disponibles
               </h2>
             </div>
             <p className="max-w-xl text-[#4b5563]">
-              Ces voitures viennent directement de Supabase. Ajoutez ou modifiez
-              la flotte depuis l&apos;interface admin.
+              Retrouvez une sélection de véhicules prêts pour vos déplacements
+              à Agadir et ses alentours.
             </p>
           </div>
 
@@ -118,14 +116,13 @@ export default async function Home() {
             </div>
           ) : (
             <div className="mt-8 rounded-lg border border-dashed border-black/20 bg-[#f9fafb] p-8 text-center text-[#6b7280]">
-              Aucune voiture publique pour le moment. Ajoutez une voiture en
-              statut disponible depuis l&apos;admin.
+              Aucune voiture disponible pour le moment.
             </div>
           )}
 
           <div className="mt-8">
             <Link
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-black/15 bg-white px-5 font-semibold text-[#111827] transition hover:bg-[#f9fafb]"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-black/15 bg-white px-5 font-semibold text-[#3a444b] transition hover:bg-[#f9fafb]"
               href="/voitures"
             >
               Voir toute la flotte
@@ -135,19 +132,19 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="contact" className="bg-[#111827] px-5 py-12 text-white">
+      <section id="contact" className="bg-[#3a444b] px-5 py-12 text-white">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div>
             <h2 className="text-2xl font-black">Paiement en espèces</h2>
             <p className="mt-2 text-white/70">
-              La demande est confirmée manuellement par téléphone, email ou
+              La demande est confirmée par téléphone, email ou
               WhatsApp.
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             {settings.contact_phone ? (
               <a
-                className="inline-flex h-12 items-center justify-center rounded-md bg-white px-5 font-semibold text-[#111827] transition hover:bg-[#f3f4f6]"
+                className="inline-flex h-12 items-center justify-center rounded-md bg-white px-5 font-semibold text-[#3a444b] transition hover:bg-[#f3f4f6]"
                 href={`tel:${settings.contact_phone}`}
               >
                 {settings.contact_phone}

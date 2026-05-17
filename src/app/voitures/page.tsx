@@ -1,6 +1,7 @@
 import { CarFront } from "lucide-react";
 import Link from "next/link";
 import { CarCard } from "@/components/car-card";
+import { SiteLogo } from "@/components/site-logo";
 import { getPublicCars } from "@/lib/public-cars";
 import { getSiteSettings } from "@/lib/site-settings";
 
@@ -16,20 +17,11 @@ export default async function CarsPage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-[#f7f3ed] text-[#111827]">
+    <main className="min-h-screen bg-[#f7f3ed] text-[#3a444b]">
       <header className="border-b border-black/10 bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-10">
+        <div className="mx-auto flex max-w-7xl items-center px-5 py-5 sm:px-8 lg:px-10">
           <Link href="/">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#b45309]">
-              {settings.city}
-            </p>
-            <p className="text-2xl font-bold">{settings.agency_name}</p>
-          </Link>
-          <Link
-            className="rounded-md bg-[#111827] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#374151]"
-            href="/connexion"
-          >
-            Admin
+            <SiteLogo city={settings.city} />
           </Link>
         </div>
       </header>
@@ -45,8 +37,8 @@ export default async function CarsPage() {
               Voitures disponibles
             </h1>
             <p className="mt-4 max-w-2xl leading-7 text-[#4b5563]">
-              Toutes les voitures affichées ici viennent de Supabase. Le gérant
-              peut les ajouter et les mettre à jour depuis l&apos;interface admin.
+              Consultez la flotte disponible et choisissez le véhicule adapté à
+              votre trajet à Agadir et ses alentours.
             </p>
           </div>
           <p className="rounded-md bg-white px-4 py-3 text-sm font-bold shadow-sm">

@@ -69,7 +69,7 @@ export default async function AdminDashboardPage() {
           <h1 className="mt-2 text-3xl font-black">Tableau de bord</h1>
         </div>
         <Link
-          className="inline-flex h-11 items-center justify-center rounded-md bg-[#111827] px-4 text-sm font-bold text-white transition hover:bg-[#374151]"
+          className="inline-flex h-11 items-center justify-center rounded-md bg-[#3a444b] px-4 text-sm font-bold text-white transition hover:bg-[#4b5660]"
           href="/admin/voitures/nouveau"
         >
           Ajouter une voiture

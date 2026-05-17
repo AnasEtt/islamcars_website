@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { SiteLogo } from "@/components/site-logo";
 import { requireAdmin } from "@/lib/admin";
 import { signOutAction } from "../connexion/actions";
 
@@ -25,16 +26,10 @@ export default async function AdminLayout({
   const { profile } = await requireAdmin();
 
   return (
-    <div className="min-h-screen bg-[#f5f6f8] text-[#111827]">
+    <div className="min-h-screen bg-[#f5f6f8] text-[#3a444b]">
       <aside className="fixed left-0 top-0 hidden h-screen w-72 border-r border-black/10 bg-white p-5 lg:block">
         <Link className="flex items-center gap-3" href="/">
-          <span className="grid h-11 w-11 place-items-center rounded-md bg-[#111827] text-white">
-            <CarFront size={22} />
-          </span>
-          <span>
-            <span className="block text-xl font-black">Islamcars</span>
-            <span className="block text-sm text-[#6b7280]">Admin</span>
-          </span>
+          <SiteLogo context="Admin" />
         </Link>
 
         <nav className="mt-8 space-y-2">
@@ -42,7 +37,7 @@ export default async function AdminLayout({
             const Icon = item.icon;
             return (
               <Link
-                className="flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-[#374151] transition hover:bg-[#f3f4f6] hover:text-[#111827]"
+                className="flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-[#4b5660] transition hover:bg-[#f3f4f6] hover:text-[#3a444b]"
                 href={item.href}
                 key={item.href}
               >

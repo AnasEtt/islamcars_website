@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "Islamcars - Location de voitures à Agadir",
   description:
     "Location de voitures à Agadir avec réservation simple et paiement en espèces.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/islamcars-logo.svg",
+  },
 };
 
 export default function RootLayout({
